@@ -52,10 +52,8 @@ test('publishes only the approved contact fields', () => {
   assert.match(contactMarkup, /href="mailto:1623206759@qq\.com"/);
   assert.equal((contactMarkup.match(/mailto:/g) || []).length, 1);
   assert.doesNotMatch(contactMarkup, /mailto:xzs13549929558@gmail\.com/);
-  assert.match(contactMarkup, /<div class="cbar__lbl">BLOG<\/div>[\s\S]*?<div class="cbar__val[^"]*">\s*占位[\s\S]*?内容整理中/);
-  const blogCard = contactMarkup.match(/<div class="cbar__item cbar__item--email">[\s\S]*?<\/div>\s*<a class="cbar__item/);
-  assert.ok(blogCard, 'Blog card should be a standalone div');
-  assert.doesNotMatch(blogCard[0], /href=/i);
+  assert.match(contactMarkup, /<a class="cbar__item cbar__item--email" href="https:\/\/golden-xzs-blog\.vercel\.app"[^>]*target="_blank"[^>]*rel="noopener noreferrer">/);
+  assert.match(contactMarkup, /<div class="cbar__lbl">BLOG<\/div>[\s\S]*?<div class="cbar__val">golden-xzs-blog\.vercel\.app<\/div>/);
   assert.match(contactMarkup, /href="https:\/\/github\.com\/golden159"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/);
   assert.match(contactMarkup, /href="https:\/\/x\.com\/oldenG562897"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/);
   assert.match(contactMarkup, /<button type="button" class="cbar__item[^>]*data-copy="golden-xzs"[^>]*aria-label="[^"]*复制微信号/);
@@ -99,7 +97,7 @@ test('keeps the public contact source synchronized and private', () => {
   assert.match(links, /1623206759@qq\.com/);
   assert.doesNotMatch(links, /xzs13549929558@gmail\.com/);
   assert.doesNotMatch(links, /13549929558/);
-  assert.match(links, /Blog：占位/);
+  assert.match(links, /Blog：https:\/\/golden-xzs-blog\.vercel\.app/);
 });
 
 test('uses explicit contact grid modifiers instead of the obsolete status layout', () => {

@@ -17,10 +17,15 @@ test('publishes only approved external profile links', () => {
   );
 
   assert.deepEqual(externalAnchors, [
+    'https://golden-xzs-blog.vercel.app',
     'https://github.com/golden159',
     'https://x.com/oldenG562897',
   ]);
   for (const [href, escapedHref] of [
+    [
+      'https://golden-xzs-blog.vercel.app',
+      'https:\\/\\/golden-xzs-blog\\.vercel\\.app',
+    ],
     ['https://github.com/golden159', 'https:\\/\\/github\\.com\\/golden159'],
     ['https://x.com/oldenG562897', 'https:\\/\\/x\\.com\\/oldenG562897'],
   ]) {

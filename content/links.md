@@ -6,7 +6,7 @@
 - GitHub：https://github.com/golden159
 - X / Twitter：https://x.com/oldenG562897
 - 微信：golden-xzs
-- Blog：占位
+- Blog：https://golden-xzs-blog.vercel.app
 
 ## 暂不公开
 
