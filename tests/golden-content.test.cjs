@@ -49,14 +49,20 @@ test('publishes only the approved contact fields', () => {
   const contactMarkup = contactBar[1];
 
   assert.match(contactMarkup, /href="mailto:1623206759@qq\.com"/);
-  assert.match(contactMarkup, /href="mailto:xzs13549929558@gmail\.com"/);
-  assert.match(contactMarkup, /<div class="cbar__val">\s*golden-xzs\s*<\/div>/);
-  assert.doesNotMatch(contactMarkup, /<a\b[^>]*>[\s\S]*?golden-xzs[\s\S]*?<\/a>/i);
-  assert.doesNotMatch(contactMarkup, /(?:https?:\/\/|weixin:\/\/|wechat:\/\/)[^"'<>\s]*golden-xzs/i);
+  assert.equal((contactMarkup.match(/mailto:/g) || []).length, 1);
+  assert.doesNotMatch(contactMarkup, /mailto:xzs13549929558@gmail\.com/);
+  assert.match(contactMarkup, /<div class="cbar__lbl">BLOG<\/div>[\s\S]*?<div class="cbar__val[^"]*">\s*占位[\s\S]*?内容整理中/);
+  const blogCard = contactMarkup.match(/<div class="cbar__item cbar__item--email">[\s\S]*?<\/div>\s*<a class="cbar__item/);
+  assert.ok(blogCard, 'Blog card should be a standalone div');
+  assert.doesNotMatch(blogCard[0], /href=/i);
+  assert.match(contactMarkup, /href="https:\/\/github\.com\/golden159"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/);
+  assert.match(contactMarkup, /href="https:\/\/x\.com\/oldenG562897"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/);
+  assert.match(contactMarkup, /<button type="button" class="cbar__item[^>]*data-copy="golden-xzs"[^>]*aria-label="[^"]*复制微信号/);
+  assert.match(contactMarkup, /data-copy-hint[^>]*>点击复制<\/em>/);
+  assert.equal((contactMarkup.match(/class="cbar__item/g) || []).length, 5);
   assert.doesNotMatch(html, /(?:手机号|手机|telephone|tel:)/i);
-
-  const withoutApprovedEmail = html.replace(/xzs13549929558@gmail\.com/g, '');
-  assert.doesNotMatch(withoutApprovedEmail, /13549929558/);
+  assert.doesNotMatch(html, /xzs13549929558@gmail\.com/);
+  assert.doesNotMatch(html, /13549929558/);
   assert.doesNotMatch(html, /GPA|专业前\s*10%/i);
 });
 
@@ -65,6 +71,16 @@ test('uses explicit contact grid modifiers instead of the obsolete status layout
   assert.match(html, /\.cbar__item--social\s*\{\s*grid-column:\s*span\s+3\s*;\s*\}/);
   assert.doesNotMatch(html, /\.cbar__item--status\b/);
   assert.doesNotMatch(html, /\.cbar__item:nth-child/);
+  assert.match(html, /button\.cbar__item\s*\{[\s\S]*?border:\s*0;[\s\S]*?cursor:\s*pointer/);
+  assert.match(html, /\.cbar__val--mail\s*\{/);
+  assert.match(html, /\.cbar__arr\s*\{[\s\S]*?transition:/);
+  assert.match(html, /navigator\.clipboard\.writeText/);
+  assert.match(html, /data-copy-hint/);
+  assert.match(html, /已复制/);
+  assert.match(html, /document\.execCommand\(['"]copy['"]\)/);
+  assert.match(html, /1600/);
+  assert.match(html, /cbar__item--email/);
+  assert.match(html, /cbar__item--social/);
 });
 
 test('keeps unapproved personal profile and contact fields private', () => {
