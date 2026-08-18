@@ -20,6 +20,15 @@ test('publishes only approved external profile links', () => {
     'https://github.com/golden159',
     'https://x.com/oldenG562897',
   ]);
+  for (const [href, escapedHref] of [
+    ['https://github.com/golden159', 'https:\\/\\/github\\.com\\/golden159'],
+    ['https://x.com/oldenG562897', 'https:\\/\\/x\\.com\\/oldenG562897'],
+  ]) {
+    const anchor = html.match(new RegExp(`<a\\b[^>]*href="${escapedHref}"[^>]*>`));
+    assert.ok(anchor, `${href} anchor should exist`);
+    assert.match(anchor[0], /\btarget="_blank"/);
+    assert.match(anchor[0], /\brel="noopener noreferrer"/);
+  }
   assert.doesNotMatch(html, /api\.github\.com\/users\//i);
   assert.doesNotMatch(html, /github\.com\/(?!golden159(?:["/]|$))/i);
 });

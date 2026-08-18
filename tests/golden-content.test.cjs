@@ -43,7 +43,9 @@ test('publishes the approved profile and project content', () => {
 test('publishes only the approved contact fields', () => {
   assert.match(html, /href="mailto:1623206759@qq\.com"/);
   assert.match(html, /href="mailto:xzs13549929558@gmail\.com"/);
-  assert.match(html, /golden-xzs/);
+  assert.match(html, /<div class="cbar__val"[^>]*>\s*golden-xzs\s*<\/div>/);
+  assert.doesNotMatch(html, /<a\b[^>]*>[\s\S]*?golden-xzs[\s\S]*?<\/a>/i);
+  assert.doesNotMatch(html, /(?:https?:\/\/|weixin:\/\/|wechat:\/\/)[^"'<>\s]*golden-xzs/i);
   assert.doesNotMatch(html, /(?:手机号|手机|telephone|tel:)/i);
 
   const withoutApprovedEmail = html.replace(/xzs13549929558@gmail\.com/g, '');
