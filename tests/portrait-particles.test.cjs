@@ -34,19 +34,16 @@ function readCssRule(selector) {
   return html.slice(start, end + 1);
 }
 
-test('uses the Golden mark for the portrait and social preview', () => {
+test('uses the approved public avatar for the portrait and social preview', () => {
   assert.ok(
-    fs.existsSync(path.join(root, 'assets', 'golden-mark.svg')),
-    'Golden mark asset should exist'
+    fs.existsSync(path.join(root, 'assets', 'avatar-public.jpg')),
+    'approved avatar asset should exist',
   );
   assert.match(
     html,
-    /<img class="portrait__img" src="assets\/golden-mark\.svg" alt="golden 品牌图形"/
+    /<img class="portrait__img" src="assets\/avatar-public\.jpg" alt="许泽升 \/ golden 个人头像"/
   );
-  assert.match(
-    html,
-    /og:image" content="assets\/golden-mark\.svg"/
-  );
+  assert.match(html, /og:image" content="assets\/avatar-public\.jpg"/);
 });
 
 test('preserves cyan and pink source colors in portrait particles', () => {

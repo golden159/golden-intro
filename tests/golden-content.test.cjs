@@ -23,11 +23,32 @@ test('contains distinct social and resume copy', () => {
   assert.match(html, /面向图像处理算法落地，构建可复现的工作流/);
 });
 
-test('shows honest unavailable states without fake links', () => {
-  assert.match(html, /项目正在整理，暂未公开/);
-  assert.match(html, /公开联系方式整理中/);
-  assert.doesNotMatch(html, /mailto:/);
-  assert.doesNotMatch(html, /https:\/\/x\.com\//);
+test('publishes the approved profile and project content', () => {
+  for (const text of [
+    '我是许泽升',
+    '光学测量、图像处理和物理模型驱动的视觉算法',
+    '大深径比微孔参数光学无损测量系统',
+    'BetaPPM 物理散射参数感知与去雾推理资源自适应系统',
+    '检测时间由 180 秒缩短至 70 秒',
+    '分类准确率由 80% 提升至 92%',
+  ]) {
+    assert.match(html, new RegExp(text));
+  }
+
+  assert.equal((html.match(/<article class="project-card"/g) || []).length, 2);
+  assert.doesNotMatch(html, /项目正在整理，暂未公开/);
+  assert.doesNotMatch(html, /LOCAL PREVIEW|LOCAL ONLY|公开联系方式整理中/);
+});
+
+test('publishes only the approved contact fields', () => {
+  assert.match(html, /href="mailto:1623206759@qq\.com"/);
+  assert.match(html, /href="mailto:xzs13549929558@gmail\.com"/);
+  assert.match(html, /golden-xzs/);
+  assert.doesNotMatch(html, /(?:手机号|手机|telephone|tel:)/i);
+
+  const withoutApprovedEmail = html.replace(/xzs13549929558@gmail\.com/g, '');
+  assert.doesNotMatch(withoutApprovedEmail, /13549929558/);
+  assert.doesNotMatch(html, /GPA|专业前\s*10%/i);
 });
 
 test('lets the contact status card fill the desktop contact grid', () => {
@@ -38,10 +59,10 @@ test('lets the contact status card fill the desktop contact grid', () => {
 });
 
 test('keeps unapproved personal profile and contact fields private', () => {
-  assert.doesNotMatch(html, /<a\b[^>]*href="https?:\/\//i);
-  assert.doesNotMatch(html, /(?:mailto:|tel:|api\.github\.com\/users\/)/i);
+  assert.doesNotMatch(html, /(?:手机号|手机|telephone|tel:)/i);
+  assert.doesNotMatch(html, /api\.github\.com\/users\//i);
   assert.doesNotMatch(html, /data-github-(?:repos|followers|profile|stars)/i);
-  assert.doesNotMatch(html, /"(?:sameAs|email|telephone)"\s*:/i);
+  assert.doesNotMatch(html, /"telephone"\s*:/i);
 });
 
 test('uses the Golden monogram and palette in the favicon', () => {
