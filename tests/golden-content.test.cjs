@@ -60,6 +60,15 @@ test('publishes only the approved contact fields', () => {
   assert.match(contactMarkup, /<button type="button" class="cbar__item[^>]*data-copy="golden-xzs"[^>]*aria-label="[^"]*复制微信号/);
   assert.match(contactMarkup, /data-copy-hint[^>]*>点击复制<\/em>/);
   assert.equal((contactMarkup.match(/class="cbar__item/g) || []).length, 5);
+  const cardModifiers = [...contactMarkup.matchAll(/<(?:a|div|button)\b[^>]*class="([^"]*cbar__item[^"]*)"/g)]
+    .map((match) => match[1].match(/cbar__item--(?:email|social)/)[0]);
+  assert.deepEqual(cardModifiers, [
+    'cbar__item--email',
+    'cbar__item--email',
+    'cbar__item--email',
+    'cbar__item--social',
+    'cbar__item--social',
+  ]);
   assert.doesNotMatch(html, /(?:手机号|手机|telephone|tel:)/i);
   assert.doesNotMatch(html, /xzs13549929558@gmail\.com/);
   assert.doesNotMatch(html, /13549929558/);
