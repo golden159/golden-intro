@@ -52,9 +52,12 @@ test('uses the Golden monogram and palette in the favicon', () => {
   assert.match(favicon, /#F0652E/i);
 });
 
-test('does not ship the previous owner avatar artwork', () => {
+test('allows the approved Golden avatar and rejects other avatar artwork', () => {
   const assetNames = fs.readdirSync(path.join(__dirname, '..', 'assets'));
 
-  assert.deepEqual(assetNames.filter((name) => /avatar|\u5934\u50cf/i.test(name)), []);
+  assert.deepEqual(
+    assetNames.filter((name) => /avatar|\u5934\u50cf/i.test(name)).sort(),
+    ['avatar-public.jpg'],
+  );
   assert.ok(assetNames.includes('golden-mark.svg'));
 });
