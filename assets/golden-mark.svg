@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">golden 品牌图形</title>
+  <desc id="desc">米白背景上的字母 G、橙色圆环与青粉信号线</desc>
+  <rect width="1200" height="1200" fill="#F4EFE6"/>
+  <circle cx="600" cy="600" r="390" fill="none" stroke="#C9C0B2" stroke-width="4"/>
+  <circle cx="600" cy="600" r="330" fill="none" stroke="#F0652E" stroke-width="18" stroke-dasharray="120 32"/>
+  <path d="M190 430H380M820 430h190M190 770h190M820 770h190" stroke="#87E1F0" stroke-width="10" stroke-linecap="round"/>
+  <path d="M270 310l110 110M930 310L820 420M270 890l110-110M930 890L820 780" stroke="#F599AD" stroke-width="8" stroke-linecap="round"/>
+  <text x="600" y="735" text-anchor="middle" font-family="Georgia, serif" font-size="430" font-weight="600" fill="#1A1714">G</text>
+  <circle cx="865" cy="790" r="24" fill="#F0652E"/>
+</svg>
