@@ -551,19 +551,17 @@
       color:var(--muted);text-transform:uppercase;text-align:right;line-height:1.7;
     }
     .work__meta b{color:var(--ink-soft);font-weight:600;}
-    .work__empty{
-      display:grid;
-      grid-template-columns:72px minmax(0,1fr);
-      gap:28px;
-      align-items:start;
-      padding:38px 0;
-      border-top:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-      color:var(--muted);
-    }
-    .work__empty-index{font-family:var(--mono);color:var(--accent);}
-    .work__empty strong{display:block;color:var(--ink);font-family:var(--serif-cjk);font-size:24px;font-weight:600;}
-    .work__empty p{margin-top:10px;line-height:1.7;}
+    .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line);}
+    .project-card{display:grid;grid-template-columns:58px minmax(0,1fr);gap:24px;padding:28px;background:var(--paper);min-height:100%;}
+    .project-card__index{font-family:var(--serif);font-size:32px;color:var(--accent);}
+    .project-card__body{min-width:0;}
+    .project-card__meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);}
+    .project-card__title{margin-top:16px;font-family:var(--serif-cjk);font-size:clamp(20px,1.7vw,28px);line-height:1.35;font-weight:600;color:var(--ink);}
+    .project-card__role{margin-top:12px;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--accent);}
+    .project-card__summary{margin-top:16px;color:var(--ink-soft);line-height:1.75;}
+    .project-card__results{display:grid;gap:7px;margin:20px 0 0;padding:16px 0 0 18px;border-top:1px solid var(--line);color:var(--ink-soft);line-height:1.6;}
+    .project-card__tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px;}
+    .project-card__tags span{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);padding:3px 7px;}
     /* 档案行 */
     .wrow{
       display:grid;
@@ -778,6 +776,10 @@
       .skill__bars,.skill__years{display:none;}
 
       .work{padding:calc(var(--nav-h) + 4vh) var(--pad-x) 8vh calc(var(--rail-x) + 12px);}
+      .project-grid{grid-template-columns:1fr;}
+      .project-card{grid-template-columns:42px minmax(0,1fr);gap:12px;padding:22px 0;}
+      .project-card__meta{font-size:9px;}
+      .project-card__title{font-size:20px;}
       .wrow{
         grid-template-columns:42px minmax(0,1fr) 24px;
         gap:12px;padding:20px 0;
@@ -924,12 +926,12 @@
       <div class="about__left">
         <h2 class="about__title" data-reveal>About<br>me.</h2>
         <div class="about__bio" data-reveal data-mode-copy data-resume>
-          <p>我是 golden，深圳大学光电信息科学与工程专业在读，关注 <em style="color:var(--accent);font-style:normal;">AI Agent、Deep Learning 与 Computer Vision</em>。</p>
-          <p>我希望推动图像处理算法从论文和实验走向可复现、可维护的工程工作流，并持续探索 Low-Level Vision 的前沿科研知识。</p>
+          <p>我是许泽升，深圳大学光电信息科学与工程本科生，关注 <em style="color:var(--accent);font-style:normal;">AI Agent、深度学习、计算机视觉与低层视觉</em>。</p>
+          <p>项目实践围绕光学测量、图像处理和物理模型驱动的视觉算法展开。我希望把光学系统、数学模型与深度学习结合起来，将复杂问题拆解为可测量、可验证并具备工程价值的解决方案。</p>
         </div>
         <div class="about__bio" data-reveal data-mode-copy data-social>
-          <p>我是 golden，目前在深圳大学学习光电信息科学与工程，也在持续探索 AI Agent、深度学习和计算机视觉。</p>
-          <p>这里记录我的学习过程、实验结果和工程思考：从理解一篇论文，到复现方法，再到把图像处理算法整理成真正能运行的工作流。</p>
+          <p>我是 golden，在深圳大学学习光电信息科学与工程，持续探索 AI Agent、深度学习、计算机视觉与低层视觉。</p>
+          <p>从微孔光学测量到物理模型驱动的去雾推理，我记录实验、复现方法，并把视觉算法整理成可运行的工程工作流。</p>
         </div>
 
         <!-- 工程蓝图档案卡 -->
@@ -1026,23 +1028,48 @@
       <div class="work__head">
         <h2 class="work__title" data-reveal data-mode-copy><span data-resume>作品<br>档案。</span><span data-social>构建<br>记录。</span></h2>
         <div class="work__meta" data-reveal data-mode-copy data-resume>
-          <b>ARCHIVE // PREPARING</b><br>
-          SELECTED PROJECTS · 00<br>
-          LOCAL PREVIEW
+          <b>ARCHIVE // 02 PROJECTS</b><br>
+          SELECTED PROJECTS · 02<br>
+          PUBLIC PROFILE
         </div>
         <div class="work__meta" data-reveal data-mode-copy data-social>
-          <b>LOG // CURATING</b><br>
+          <b>LOG // 02 BUILDS</b><br>
           NOTES · EXPERIMENTS · WORKFLOWS<br>
-          LOCAL PREVIEW
+          PUBLIC PROFILE
         </div>
       </div>
       <div class="work__list" data-reveal>
-        <div class="work__empty" role="status">
-          <span class="work__empty-index">00</span>
-          <div>
-            <strong>项目正在整理，暂未公开</strong>
-            <p>完成项目资料、代码地址和演示链接核对后再发布。</p>
-          </div>
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-card__index">01</div>
+            <div class="project-card__body">
+              <div class="project-card__meta"><span>OPTICAL MEASUREMENT</span><span>2025.03—2025.09</span></div>
+              <h3 class="project-card__title">大深径比微孔参数光学无损测量系统</h3>
+              <p class="project-card__role">ROLE / 系统总体方案设计与核心算法开发</p>
+              <p class="project-card__summary">面向直径约 0.1–0.3 mm、深径比大于 3 的微孔，结合 PZT 精密位移台、USB 3.0 工业相机和图像处理算法完成非接触式光学测量。</p>
+              <ul class="project-card__results">
+                <li>检测时间由 180 秒缩短至 70 秒</li>
+                <li>平均绝对误差由 3.28% 降至 1.36%</li>
+                <li>最大误差由 7.21% 降至 4.40%</li>
+              </ul>
+              <div class="project-card__tags"><span>PZT</span><span>USB3 CAMERA</span><span>IMAGE PROCESSING</span></div>
+            </div>
+          </article>
+          <article class="project-card">
+            <div class="project-card__index">02</div>
+            <div class="project-card__body">
+              <div class="project-card__meta"><span>LOW-LEVEL VISION</span><span>2025.09—NOW</span></div>
+              <h3 class="project-card__title">BetaPPM 物理散射参数感知与去雾推理资源自适应系统</h3>
+              <p class="project-card__role">ROLE / 核心模型与推理调度方案设计</p>
+              <p class="project-card__summary">结合大气散射模型、BetaHazeDataset 和 ResNet50 双头分类/回归，对物理散射参数进行感知，并依据参数自适应分配推理采样资源。</p>
+              <ul class="project-card__results">
+                <li>分类准确率由 80% 提升至 92%</li>
+                <li>F1 由 0.654 提升至 0.753</li>
+                <li>RTTS 上 MUSIQ +1.03、PAQ2PIQ +0.18</li>
+              </ul>
+              <div class="project-card__tags"><span>ASM</span><span>RESNET50</span><span>ADAPTIVE SAMPLING</span></div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
