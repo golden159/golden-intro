@@ -41,11 +41,18 @@ test('publishes the approved profile and project content', () => {
 });
 
 test('publishes only the approved contact fields', () => {
-  assert.match(html, /href="mailto:1623206759@qq\.com"/);
-  assert.match(html, /href="mailto:xzs13549929558@gmail\.com"/);
-  assert.match(html, /<div class="cbar__val"[^>]*>\s*golden-xzs\s*<\/div>/);
-  assert.doesNotMatch(html, /<a\b[^>]*>[\s\S]*?golden-xzs[\s\S]*?<\/a>/i);
-  assert.doesNotMatch(html, /(?:https?:\/\/|weixin:\/\/|wechat:\/\/)[^"'<>\s]*golden-xzs/i);
+  const contactBar = html.match(
+    /<div class="contact__bar">([\s\S]*?)<\/div>\s*<div class="contact__foot">/,
+  );
+
+  assert.ok(contactBar, 'contact bar should precede the contact footer');
+  const contactMarkup = contactBar[1];
+
+  assert.match(contactMarkup, /href="mailto:1623206759@qq\.com"/);
+  assert.match(contactMarkup, /href="mailto:xzs13549929558@gmail\.com"/);
+  assert.match(contactMarkup, /<div class="cbar__val">\s*golden-xzs\s*<\/div>/);
+  assert.doesNotMatch(contactMarkup, /<a\b[^>]*>[\s\S]*?golden-xzs[\s\S]*?<\/a>/i);
+  assert.doesNotMatch(contactMarkup, /(?:https?:\/\/|weixin:\/\/|wechat:\/\/)[^"'<>\s]*golden-xzs/i);
   assert.doesNotMatch(html, /(?:手机号|手机|telephone|tel:)/i);
 
   const withoutApprovedEmail = html.replace(/xzs13549929558@gmail\.com/g, '');
@@ -53,11 +60,11 @@ test('publishes only the approved contact fields', () => {
   assert.doesNotMatch(html, /GPA|专业前\s*10%/i);
 });
 
-test('lets the contact status card fill the desktop contact grid', () => {
-  assert.match(
-    html,
-    /\.cbar__item--status\s*\{\s*grid-column:\s*1\s*\/\s*-1\s*;\s*\}/,
-  );
+test('uses explicit contact grid modifiers instead of the obsolete status layout', () => {
+  assert.match(html, /\.cbar__item--email\s*\{\s*grid-column:\s*span\s+2\s*;\s*\}/);
+  assert.match(html, /\.cbar__item--social\s*\{\s*grid-column:\s*span\s+3\s*;\s*\}/);
+  assert.doesNotMatch(html, /\.cbar__item--status\b/);
+  assert.doesNotMatch(html, /\.cbar__item:nth-child/);
 });
 
 test('keeps unapproved personal profile and contact fields private', () => {
