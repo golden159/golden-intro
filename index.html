@@ -697,18 +697,12 @@
       background:var(--paper);
       transition:background .25s;
       overflow:hidden;
+      color:inherit;text-decoration:none;
     }
-    .cbar__item:nth-child(1),
-    .cbar__item:nth-child(2),
-    .cbar__item:nth-child(3){
-      grid-column:span 2;
-    }
-    .cbar__item:nth-child(4),
-    .cbar__item:nth-child(5){
-      grid-column:span 3;
-    }
-    .cbar__item--status{grid-column:1/-1;}
+    .cbar__item--email{grid-column:span 2;}
+    .cbar__item--social{grid-column:span 3;}
     .cbar__item:hover{background:#ECE5D6;}
+    .cbar__item:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;}
     .cbar__info{flex:1;min-width:0;}
     .cbar__lbl{font-size:11px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;}
     .cbar__val{
@@ -794,6 +788,7 @@
         min-height:auto;
         padding:24px 20px;
       }
+      .cbar__item--email,.cbar__item--social{grid-column:span 1 !important;}
     }
 
     @media (max-width:600px){
@@ -1085,12 +1080,12 @@
           <span class="contact__underline"></span>
         </h2>
         <p class="contact__sub" data-reveal data-mode-copy data-resume>欢迎交流 AI、深度学习、计算机视觉与图像处理工程实践。</p>
-        <p class="contact__sub" data-reveal data-mode-copy data-social>学习记录和公开联系方式正在整理。</p>
+        <p class="contact__sub" data-reveal data-mode-copy data-social>欢迎交流 AI、深度学习、计算机视觉与图像处理工程实践。</p>
         <div class="contact__status" data-reveal data-mode-copy data-resume>
           <span class="pulse"></span>持续学习 · OPEN TO CONNECT
         </div>
         <div class="contact__status" data-reveal data-mode-copy data-social>
-          <span class="pulse"></span>内容准备中 · LOCAL PREVIEW
+          <span class="pulse"></span>公开交流中 · OPEN TO CONNECT
         </div>
       </div>
 
@@ -1130,12 +1125,25 @@
       </div>
 
       <div class="contact__bar">
-        <div class="cbar__item cbar__item--status" role="status">
-          <div class="cbar__logo" aria-hidden="true">G.</div>
-          <div class="cbar__info">
-            <div class="cbar__lbl">CONTACT</div>
-            <div class="cbar__val" style="margin-top:8px;">公开联系方式整理中 <em>LOCAL ONLY</em></div>
-          </div>
+        <a class="cbar__item cbar__item--email" href="mailto:1623206759@qq.com">
+          <div class="cbar__logo" aria-hidden="true">@</div>
+          <div class="cbar__info"><div class="cbar__lbl">EMAIL / 01</div><div class="cbar__val">1623206759@qq.com</div></div>
+        </a>
+        <a class="cbar__item cbar__item--email" href="mailto:xzs13549929558@gmail.com">
+          <div class="cbar__logo" aria-hidden="true">@</div>
+          <div class="cbar__info"><div class="cbar__lbl">EMAIL / 02</div><div class="cbar__val">xzs13549929558@gmail.com</div></div>
+        </a>
+        <a class="cbar__item cbar__item--social" href="https://github.com/golden159" target="_blank" rel="noopener noreferrer">
+          <div class="cbar__logo" aria-hidden="true">GH</div>
+          <div class="cbar__info"><div class="cbar__lbl">GITHUB</div><div class="cbar__val">golden159</div></div>
+        </a>
+        <a class="cbar__item cbar__item--social" href="https://x.com/oldenG562897" target="_blank" rel="noopener noreferrer">
+          <div class="cbar__logo" aria-hidden="true">X</div>
+          <div class="cbar__info"><div class="cbar__lbl">X / TWITTER</div><div class="cbar__val">@oldenG562897</div></div>
+        </a>
+        <div class="cbar__item cbar__item--social">
+          <div class="cbar__logo" aria-hidden="true">WX</div>
+          <div class="cbar__info"><div class="cbar__lbl">WECHAT / PUBLIC</div><div class="cbar__val">golden-xzs</div></div>
         </div>
       </div>
 
