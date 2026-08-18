@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const links = fs.readFileSync(path.join(__dirname, '..', 'content', 'links.md'), 'utf8');
 const favicon = fs.readFileSync(path.join(__dirname, '..', 'favicon.svg'), 'utf8');
 
 test('uses the Golden identity in metadata and visible content', () => {
@@ -75,6 +76,13 @@ test('publishes only the approved contact fields', () => {
   assert.doesNotMatch(html, /GPA|专业前\s*10%/i);
 });
 
+test('keeps the public contact source synchronized and private', () => {
+  assert.match(links, /1623206759@qq\.com/);
+  assert.doesNotMatch(links, /xzs13549929558@gmail\.com/);
+  assert.doesNotMatch(links, /13549929558/);
+  assert.match(links, /Blog：占位/);
+});
+
 test('uses explicit contact grid modifiers instead of the obsolete status layout', () => {
   assert.match(html, /\.cbar__item--email\s*\{\s*grid-column:\s*span\s+2\s*;\s*\}/);
   assert.match(html, /\.cbar__item--social\s*\{\s*grid-column:\s*span\s+3\s*;\s*\}/);
@@ -87,6 +95,7 @@ test('uses explicit contact grid modifiers instead of the obsolete status layout
   assert.match(html, /data-copy-hint/);
   assert.match(html, /已复制/);
   assert.match(html, /document\.execCommand\(['"]copy['"]\)/);
+  assert.match(html, /writeText\(value\)\.catch\(function\(\)\{\s*return fallbackCopy\(value\);/);
   assert.match(html, /1600/);
   assert.match(html, /cbar__item--email/);
   assert.match(html, /cbar__item--social/);

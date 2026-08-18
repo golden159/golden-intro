@@ -1522,22 +1522,25 @@
       if(!button) return;
       var hint = button.querySelector('[data-copy-hint]');
       var arrow = button.querySelector('.cbar__arr');
+      function fallbackCopy(value){
+        var area = document.createElement('textarea');
+        area.value = value;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        var succeeded = document.execCommand('copy');
+        area.remove();
+        return succeeded;
+      }
       button.addEventListener('click', function(){
         var value = button.getAttribute('data-copy');
         var copy = navigator.clipboard && navigator.clipboard.writeText
-          ? navigator.clipboard.writeText(value)
-          : Promise.resolve().then(function(){
-              var area = document.createElement('textarea');
-              area.value = value;
-              area.setAttribute('readonly', '');
-              area.style.position = 'fixed';
-              area.style.opacity = '0';
-              document.body.appendChild(area);
-              area.select();
-              document.execCommand('copy');
-              area.remove();
-            });
-        Promise.resolve(copy).then(function(){
+          ? navigator.clipboard.writeText(value).catch(function(){ return fallbackCopy(value); })
+          : Promise.resolve().then(function(){ return fallbackCopy(value); });
+        Promise.resolve(copy).then(function(succeeded){
+          if(succeeded === false) return;
           if(hint) hint.textContent = '已复制';
           if(arrow) arrow.textContent = '✓';
           window.setTimeout(function(){
