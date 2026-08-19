@@ -31,6 +31,9 @@ yarn-error.log*
 # 视觉伴侣/brainstorm 临时产物
 .superpowers/
 
+# 本地隔离工作区
+.worktrees/
+
 # 日志/缓存
 *.log
 .cache/
