@@ -24,9 +24,13 @@
 
 ## File Structure
 
-- Create `tests/theme-toggle.test.cjs`: static contract and pure-helper tests for default theme, markup, persistence, transitions, responsive layout, and theme-aware particles.
+- Create `tests/theme-toggle.test.cjs`: real Headless Chrome behavior tests for default theme, markup, persistence, transitions, responsive layout, and theme-aware particles.
 - Modify `index.html`: early theme bootstrap, dark/light design tokens, theme button markup, responsive styles, transition CSS, controller JavaScript, and current-theme particle colors.
 - Do not split `index.html`; the existing project intentionally uses a single static file.
+
+## Approved Execution Adjustment
+
+Before implementation, the user approved replacing the source-regex test snippets below with real browser behavior tests. `tests/theme-toggle.test.cjs` therefore starts an in-process static server and drives Headless Chrome through the DevTools Protocol to verify rendered colors, button clicks, persistence across reloads, invalid and blocked storage, View Transition use, reduced-motion fallback, 320px layout, and Canvas particle colors. Chrome is discovered through `CHROME_PATH` or common Linux paths; the browser suite is skipped when no supported Chrome/Chromium executable is available. The production requirements and verification commands remain unchanged.
 
 ---
 
