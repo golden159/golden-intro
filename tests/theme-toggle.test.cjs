@@ -20,6 +20,20 @@ function delay(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
+function stopProcess(child) {
+  if (!child || child.exitCode !== null || child.signalCode !== null) return Promise.resolve();
+  return new Promise((resolve) => {
+    const forceTimer = setTimeout(() => {
+      if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
+    }, 2000);
+    child.once('exit', () => {
+      clearTimeout(forceTimer);
+      resolve();
+    });
+    child.kill('SIGTERM');
+  });
+}
+
 function listen(server) {
   return new Promise((resolve, reject) => {
     server.once('error', reject);
@@ -284,9 +298,16 @@ describeInBrowser('intro theme toggle', { concurrency: false, timeout: 90000 }, 
 
   test.after(async () => {
     if (client) client.close();
-    if (chrome && !chrome.killed) chrome.kill('SIGTERM');
+    await stopProcess(chrome);
     if (server) await closeServer(server);
-    if (chromeProfile) fs.rmSync(chromeProfile, { recursive: true, force: true });
+    if (chromeProfile) {
+      fs.rmSync(chromeProfile, {
+        recursive: true,
+        force: true,
+        maxRetries: 5,
+        retryDelay: 100,
+      });
+    }
   });
 
   test('defaults first-time visitors to the complete dark theme', async () => {
